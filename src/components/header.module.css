@@ -1,0 +1,12 @@
+.navbar{
+    background-color: #048391;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 30px 0 30px;
+    color: white;
+}
+.navbar a:active,
+.navbar a.active{
+    text-decoration: underline #048391;
+}
