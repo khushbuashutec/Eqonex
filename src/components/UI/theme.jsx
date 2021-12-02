@@ -15,12 +15,13 @@ const theme = createTheme({
                         color: 'white',
                         backgroundColor: 'transparent',
                         margin: '10px',
+                        padding: '5px 26px',
                         textDecoration: 'none',
                         "&:hover": {
                             backgroundColor: "#fff",
                             color: cyan[800],
                             border: `1px solid ${cyan[800]}`
-                        }
+                        },
 
                     },
 
@@ -30,10 +31,12 @@ const theme = createTheme({
                     style: {
                         textTransform: 'none',
                         color: cyan[800],
-                        border: `1px solid #fff`,
+                        border: '1px solid #fff',
                         backgroundColor: "white",
                         margin: '10px',
+                        padding: '5px 26px',
                         textDecoration: 'none',
+                        borderRadius: '4px',
                         "&:hover": {
                             backgroundColor: cyan[800],
                             color: ' #fff',
@@ -45,7 +48,8 @@ const theme = createTheme({
             ]
         },
 
-    }
+    },
+
 });
 
 export default theme
