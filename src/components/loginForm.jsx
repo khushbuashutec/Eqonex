@@ -1,10 +1,11 @@
 
-import { TextField, Button, FormLabel, Link } from '@mui/material'
-import useStyles from './loginStyle';
+import { TextField, FormLabel, Link, IconButton, InputAdornment, OutlinedInput, } from '@mui/material'
+import useStyles from './Styles/loginStyle';
 import { useNavigate } from 'react-router-dom';
 import UseInput from './hooks/user_input';
-
-
+import { VisibilityOutlined, VisibilityOffOutlined } from '@mui/icons-material';
+import { useState } from 'react';
+import MyButton from './UI/button';
 
 
 const LoginForm = () => {
@@ -12,7 +13,8 @@ const LoginForm = () => {
     const navigate = useNavigate()
     const classes = useStyles();
     const passwordExp = new RegExp(`^(?=.*[a-z])(?=.*[A-Z]).{8,32}$`);
-    // return re.test(value);
+    const [showPassword, setShowPassword] = useState(false)
+
     const {
         value: enteredEmail,
         hasError: emailInputHasError,
@@ -31,30 +33,25 @@ const LoginForm = () => {
         reset: resetPassword
     } = UseInput(value => passwordExp.test(value));
 
-    let formIsValid = false;
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
 
-    if (enteredEmailIsValid && enteredPasswordIsValid) {
-        formIsValid = true;
-    }
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
-        if (!enteredEmailIsValid) {
+        if (!enteredEmailIsValid && !enteredPasswordIsValid) {
             return
         }
-
-
         console.log(enteredEmail);
         resetEmail();
-
         console.log(enteredPassword);
         resetPassword();
     }
-
-
-
-
-
     // const nameInputClasses = nameInputHasError ? 'form-control invalid' : 'form-control'
     // const emailInputClasses = EmailInputHasError ? 'form-control invalid' : 'form-control'
     return (
@@ -66,33 +63,46 @@ const LoginForm = () => {
                 <div>
                     <FormLabel className={classes.label}>Email
                         <span className={classes.alert}>*</span> </FormLabel>
-                    <TextField className={classes.input}
+                    <TextField className={classes.emailField}
                         fullWidth
                         placeholder="Please Enter A Valid Email Address"
-                        id="fullWidth"
+                        id="email"
                         onChange={emailChangeHandler}
                         onBlur={emailBlurHandler}
                         value={enteredEmail} />
-
+                    {emailInputHasError && < p className={classes.error}> Email Required!</p>}
                 </div>
-                {emailInputHasError && < p className={classes.error}> Email Required!</p>}
+
                 <div>
                     <FormLabel className={classes.label}>Password
                         <span className={classes.alert}>*</span> </FormLabel>
-                    <TextField className={classes.input}
+                    <OutlinedInput className={classes.emailField}
                         fullWidth
+                        type={showPassword ? 'text' : 'password'}
                         placeholder="Please Enter A Valid Password Address"
-                        id="fullWidth"
+                        id="password"
                         onChange={passwordChangeHandler}
                         onBlur={passwordBlurHandler}
-                        value={enteredPassword} />
+                        value={enteredPassword}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end">
+                                    {!showPassword ? <VisibilityOffOutlined /> : <VisibilityOutlined />}
+                                </IconButton>
+                            </InputAdornment>}>
+                    </OutlinedInput>
+                    {passwordInputHasError && < p className={classes.error} > Password Must Required!</p>}
                 </div>
-                {passwordInputHasError && < p className={classes.error} > Password Must Required!</p>}
+
                 <div>
-                    <Button className={classes.btnLogin}
-                        fullWidth
+                    <MyButton width="100%"
+                        label="Login"
                         onClick={formSubmitHandler}
-                        disabled={!formIsValid}>Login</Button>
+                    />
                 </div>
                 <div>
                     <div className={classes.divider} />
@@ -105,10 +115,8 @@ const LoginForm = () => {
                     <p className={classes.signUpLink}>Don't have an account?
                         <Link onClick={() => { navigate('/signup') }} > SIGN UP</Link></p>
                 </div>
-            </form >
-        </div >
+            </form>
+        </div>
     )
 }
-
-
 export default LoginForm

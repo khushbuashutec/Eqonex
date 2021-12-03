@@ -44,6 +44,22 @@ const theme = createTheme({
                         }
                     }
                 },
+                {
+                    props: { variant: "third", },
+                    style: {
+                        textTransform: 'none',
+                        color: cyan[800],
+                        border: `1px solid ${cyan[800]}`,
+                        backgroundColor: "transparent",
+                        padding: '5px 26px',
+                        width: '45%',
+                        borderColor: '#E0E3E9',
+                        borderRadius: 0,
+                        "&:hover": {
+                            borderColor: cyan[800]
+                        }
+                    }
+                },
 
             ]
         },
